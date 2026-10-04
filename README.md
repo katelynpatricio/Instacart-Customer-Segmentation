@@ -40,7 +40,7 @@ The interactive workbook is available at `Instacart Capstone Dashboard.twbx`
 
 ## Presentation
 
-[View the Presentation]([https://canva.link/mo9gppdgcfkhssm])
+[View the Presentation](https://canva.link/mo9gppdgcfkhssm)
 
 **Contents:**
 - **Introduction**: Business question and expected impact
