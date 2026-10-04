@@ -1,0 +1,156 @@
+---
+title: "Business Levers"
+author: "Katelyn Patricio"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+o = read.csv('orders.csv')
+p = read.csv('products.csv')
+op = read.csv('order_products__prior.csv')
+a = read.csv('aisles.csv')
+
+library(ggplot2)
+library(dplyr)
+library(tidyverse)
+```
+
+```{r}
+df <- merge(op, o, by="order_id")
+df <- merge(df, p, by="product_id")
+df <- merge(df, a, by="aisle_id")
+```
+
+```{r}
+tail(df)
+```
+
+```{r}
+dim(df)
+```
+
+```{r}
+summary(df)
+```
+
+```{r}
+sum(is.na(df))  
+colSums(is.na(df))            
+mean(is.na(df)) * 100
+```
+
+```{r}
+reorder_rate <- mean(df$reordered, na.rm = TRUE)
+print(round(reorder_rate * 100, 2))
+
+mean_hour <- mean(df$order_hour_of_day, na.rm = TRUE)
+print(round(mean_hour, 2))
+
+missing_days <- sum(is.na(df$days_since_prior_order))
+print(missing_days)
+
+basket <- df %>%
+  group_by(order_id) %>%
+  summarize(basket_size = n()) %>%
+  summarize(median_size = median(basket_size), max_size = max(basket_size))
+
+print(basket)
+```
+
+```{r}
+ggplot(df, aes(x = days_since_prior_order)) +
+  geom_histogram(binwidth = 1) +
+  labs(title = "Days Between Orders",
+       x = "Days Since Prior Order",
+       y = "Count") +
+  theme_minimal()
+
+ggplot(df, aes(x = order_dow)) +
+  geom_histogram(binwidth = 1) +
+  labs(title = "Orders by Day of Week",
+       x = "Day of Week",
+       y = "Count") +
+  scale_x_continuous(breaks = 0:6) +
+  theme_minimal()
+
+ggplot(df, aes(x = order_number)) +
+  geom_histogram(bins = 50) +
+  labs(title = "Distribution of Order Numbers",
+       x = "Order Number",
+       y = "Count") +
+  theme_minimal()
+
+ggplot(df, aes(x = add_to_cart_order)) +
+  geom_histogram(bins = 30) +
+  labs(title = "Add to Cart Sequence",
+       x = "Position in Cart",
+       y = "Count") +
+  theme_minimal()
+
+ggplot(df, aes(x = factor(reordered))) +
+  labs(title = "Reordered vs First-time Purchase",
+       x = "Reordered",
+       y = "Count") +
+  geom_bar(fill = "gray") +
+  theme_minimal()
+```
+
+```{r}
+head(df_RFM)
+```
+
+```{r}
+df <- df %>%
+  arrange(user_id, order_number) %>%
+  group_by(user_id) %>%
+  mutate(order_day = cumsum(coalesce(days_since_prior_order, 0))) %>%
+  ungroup()
+
+rename(df, orderD = order_day)
+
+max_order_number <- max(df$order_number)
+
+rfm_data <- df %>%
+  group_by(user_id) %>%
+  summarize(
+    frequency = n_distinct(order_id),
+    recency   = max_order_number - max(order_number),
+    monetary  = n() / n_distinct(order_id),
+    .groups = "drop"
+    )
+```
+
+```{r}
+rfm2 <- df %>%
+  group_by(user_id) %>%
+  summarize(
+    frequency = n_distinct(order_id),
+    recency   = dplyr::last(days_since_prior_order),
+    monetary  = n() / n_distinct(order_id),
+    .groups = "drop")
+```
+
+```{r}
+rfm2
+```
+
+
+```{r}
+rfm_data
+```
+
+
+```{r}
+write.csv(rfm_data, "rfm.csv", row.names = FALSE)
+
+write.csv(df, "instacart.csv", row.names = FALSE)
+```
+
+
+```{r}
+write.csv(rfm2, "rfm2.csv", row.names = FALSE)
+```
+
+
+
