@@ -28,7 +28,7 @@ The dataset used for this project can be accessed [here]([https://www.kaggle.com
 
 ## Tableau Dashboard
 
-![Dashboard preview]([Dashboard Preview.png])
+![Dashboard preview](Dashboard_Preview.png)
 
 The interactive workbook is available at [`dashboard/Instacart_Dashboard.twbx`]([Instacart_Capstone Dashboard.twbx])
 
