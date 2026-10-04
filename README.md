@@ -28,9 +28,13 @@ The dataset used for this project can be accessed [here]([https://www.kaggle.com
 
 ## Tableau Dashboard
 
-![Dashboard preview](Dashboard_Preview.png)
+**Contents:**
+- **Summary Metrics**: Average basket size, number of orders, days between orders, number of aisles, average cart position, and total customers (206,209)
+- **Cluster Filter**: View all customers or a single segment (High Value Customers, Frequent Shoppers, Inactive Customers, or Loyal Shoppers)
+- **Segment Drivers**: Regression coefficients for number of orders and average basket size by segment
+- **Feature Importance**: Ranked regression coefficients for each behavior, color-coded as positive or negative relationships
 
-The interactive workbook is available at [`dashboard/Instacart_Dashboard.twbx`]([Instacart_Capstone Dashboard.twbx])
+The interactive workbook is available at [`dashboard/Instacart_Dashboard.twbx`]([Instacart Capstone Dashboard.twbx])
 
 ---
 
