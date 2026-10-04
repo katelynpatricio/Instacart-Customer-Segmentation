@@ -5,7 +5,7 @@ This capstone project answers the question: *"Which retail levers should be prio
 
 Capstone project for DATA 480, Nevada State University.
 
-The dataset used for this project can be accessed [here]([https://www.kaggle.com/c/instacart-market-basket-analysis](https://www.kaggle.com/datasets/yasserh/instacart-online-grocery-basket-analysis-dataset)).
+The dataset used for this project can be accessed [here](https://www.kaggle.com/c/instacart-market-basket-analysis](https://www.kaggle.com/datasets/yasserh/instacart-online-grocery-basket-analysis-dataset).
 
 ---
 
